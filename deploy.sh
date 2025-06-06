@@ -20,15 +20,28 @@ cd "$BUILD_DIR"
 
 # Initialize a temporary git repo in _site
 git init > /dev/null
-git remote add origin "$REPO_URL"
-git checkout -b "$DEPLOY_BRANCH"
 
-# Prevent GitHub from ignoring certain files
+if ! git remote | grep -q origin; then
+  git remote add origin "$REPO_URL"
+fi
+
+# Checkout or create the deploy branch based on remote existence
+if git ls-remote --exit-code --heads origin "$DEPLOY_BRANCH"; then
+  git fetch origin "$DEPLOY_BRANCH"
+  git checkout -B "$DEPLOY_BRANCH" origin/"$DEPLOY_BRANCH"
+else
+  git checkout -B "$DEPLOY_BRANCH"
+fi
+
 touch .nojekyll
-
 git add .
-git commit -m "🚀 Deploy: $(date '+%Y-%m-%d %H:%M:%S')"
-git push --force origin "$DEPLOY_BRANCH"
+
+if git diff --cached --quiet; then
+  echo "No changes to deploy."
+else
+  git commit -m "🚀 Deploy: $(date '+%Y-%m-%d %H:%M:%S')"
+  git push origin "$DEPLOY_BRANCH"
+fi
 
 # Cleanup temporary git info
 rm -rf .git
