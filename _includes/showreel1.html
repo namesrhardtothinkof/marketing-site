@@ -1,14 +1,12 @@
-<div class="">test showreel2</div>
-
-<div class="grid grid-cols-1 grid-rows-[6fr_1fr] md:grid-cols-[6fr_1fr] md:grid-rows-1 gap-1 md:gap-2 w-full aspect-[1.5] p-2">
+<div class="grid grid-cols-1 max-h-[50vh] md:grid-cols-[6fr_1fr] lg:grid-cols-[5fr_1fr] md:grid-rows-1 gap-1 md:gap-2">
     {% assign focused_project = site.projects | first %}
-    <div class="h-full overflow-hidden"><img id="spotlight" class="object-cover w-full md:h-full" src="{{ focused_project.image }}" alt=""></div>
+    <img id="spotlight" class="object-cover w-full md:h-full" src="{{ focused_project.image }}" alt="">
 
     <div id="palette" class="overflow-hidden flex flex-row md:flex-col gap-1 md:gap-2">
         <div class="scroll-container flex flex-row md:flex-col gap-1 md:gap-2">
             {% for i in (1..5) %}
                 {% for project in site.projects %}
-                    <img class="w-20 h-20 md:w-full md:h-20 object-cover cursor-pointer hover:opacity-80 transition-opacity flex-shrink-0" 
+                    <img class="w-40 h-40 md:w-full md:h-40 object-cover cursor-pointer hover:opacity-80 transition-opacity flex-shrink-0" 
                         src="{{ project.image }}" alt="" onclick="setSpotlight('{{ project.image }}')">
                 {% endfor %}
             {% endfor %}
