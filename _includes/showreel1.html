@@ -1,12 +1,59 @@
 <div class="">test showreel2</div>
 
-<div class="grid grid-cols-[3fr_1fr] grid-rows-1 gap-2 w-full aspect-[2]">
+<div class="grid grid-cols-1 grid-rows-[6fr_1fr] md:grid-cols-[6fr_1fr] md:grid-rows-1 gap-1 md:gap-2 w-full aspect-[1.5] p-2">
     {% assign focused_project = site.projects | first %}
-    <div class="h-full"><img class="object-cover h-full" src="{{ focused_project.image }}" alt=""></div>
+    <div class="h-full overflow-hidden"><img id="spotlight" class="object-cover w-full md:h-full" src="{{ focused_project.image }}" alt=""></div>
 
-    <div class="overflow-hidden flex flex-col gap-2">
-        {% for project in site.projects %}
-            <img src="{{ project.image }}" alt="">
-        {% endfor %}
+    <div id="palette" class="overflow-hidden flex flex-row md:flex-col gap-1 md:gap-2">
+        <div class="scroll-container flex flex-row md:flex-col gap-1 md:gap-2">
+            {% for i in (1..5) %}
+                {% for project in site.projects %}
+                    <img class="w-20 h-20 md:w-full md:h-20 object-cover cursor-pointer hover:opacity-80 transition-opacity flex-shrink-0" 
+                        src="{{ project.image }}" alt="" onclick="setSpotlight('{{ project.image }}')">
+                {% endfor %}
+            {% endfor %}
+        </div>
     </div>
 </div>
+
+<script defer>
+    const spotlight = document.getElementById('spotlight')
+    function setSpotlight(img) {
+        spotlight.src = img
+    }
+</script>
+
+<style>
+        .scroll-container {
+            animation: scroll-loop 100s linear infinite;
+        }
+        
+        .scroll-container:hover {
+            animation-play-state: paused;
+        }
+        
+        @keyframes scroll-loop {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+        
+        /* For vertical scrolling on md screens */
+        @media (min-width: 768px) {
+            .scroll-container {
+                animation: scroll-loop-vertical 100s linear infinite;
+            }
+            
+            @keyframes scroll-loop-vertical {
+                0% {
+                    transform: translateY(0);
+                }
+                100% {
+                    transform: translateY(-50%);
+                }
+            }
+        }
+    </style>
