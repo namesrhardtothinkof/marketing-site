@@ -1,0 +1,12 @@
+<div class="">test showreel2</div>
+
+<div class="grid grid-cols-[3fr_1fr] grid-rows-1 gap-2 w-full aspect-[2]">
+    {% assign focused_project = site.projects | first %}
+    <div class="h-full"><img class="object-cover h-full" src="{{ focused_project.image }}" alt=""></div>
+
+    <div class="overflow-hidden flex flex-col gap-2">
+        {% for project in site.projects %}
+            <img src="{{ project.image }}" alt="">
+        {% endfor %}
+    </div>
+</div>
