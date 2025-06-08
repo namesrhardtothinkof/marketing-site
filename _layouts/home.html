@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
     
   </head>
-  <body class="px-[40px]">
+  <body class="">
     <style>
       * {
         font-family: "Open Sans", sans-serif;
@@ -30,8 +30,12 @@
       }
     </style>
 
-    {% include header.html %}
-    {% include showreel1.html %}
+    <div class="px-[40px]">
+      {% include header.html %}
+      {% include showreel1.html %}
+    </div>
     {{ content }}
+    {% include about.html %}
+    {% include contact.html %}
   </body>
 </html>
